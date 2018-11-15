@@ -2,7 +2,7 @@ package com.nanshan.papaya.rpc.client;
 
 import java.util.List;
 
-import com.nanshan.papaya.rpc.model.Person;
+import com.nanshan.papaya.rpc.client.model.Person;
 
 /**
  * Created by luxiaoxun on 2016-03-10.

@@ -1,4 +1,4 @@
-package com.nanshan.papaya.rpc.test;
+package com.nanshan.papaya.rpc.cases;
 
 import java.util.concurrent.TimeUnit;
 

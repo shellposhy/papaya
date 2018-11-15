@@ -1,10 +1,10 @@
-package com.nanshan.papaya.rpc.server;
+package com.nanshan.papaya.rpc.server.service;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import com.nanshan.papaya.rpc.client.PersonService;
-import com.nanshan.papaya.rpc.model.Person;
+import com.nanshan.papaya.rpc.client.model.Person;
 import com.nanshan.papaya.rpc.server.annotation.PapayaService;
 
 /**

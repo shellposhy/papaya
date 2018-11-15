@@ -1,4 +1,4 @@
-package com.nanshan.papaya.rpc.test;
+package com.nanshan.papaya.rpc.cases;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -10,10 +10,10 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.nanshan.papaya.rpc.client.HelloService;
 import com.nanshan.papaya.rpc.client.PersonService;
+import com.nanshan.papaya.rpc.client.model.Person;
 import com.nanshan.papaya.rpc.client.ClientFuture;
 import com.nanshan.papaya.rpc.client.Client;
 import com.nanshan.papaya.rpc.client.proxy.IAsyncObject;
-import com.nanshan.papaya.rpc.model.Person;
 
 import java.util.ArrayList;
 import java.util.List;

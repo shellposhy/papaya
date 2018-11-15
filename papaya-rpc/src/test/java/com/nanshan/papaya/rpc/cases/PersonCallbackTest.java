@@ -1,14 +1,14 @@
-package com.nanshan.papaya.rpc.test;
+package com.nanshan.papaya.rpc.cases;
 
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
 
 import com.nanshan.papaya.rpc.client.ClientCallback;
 import com.nanshan.papaya.rpc.client.PersonService;
+import com.nanshan.papaya.rpc.client.model.Person;
 import com.nanshan.papaya.rpc.client.ClientFuture;
 import com.nanshan.papaya.rpc.client.Client;
 import com.nanshan.papaya.rpc.client.proxy.IAsyncObject;
-import com.nanshan.papaya.rpc.model.Person;
 import com.nanshan.papaya.rpc.registry.ServiceDiscovery;
 
 /**
