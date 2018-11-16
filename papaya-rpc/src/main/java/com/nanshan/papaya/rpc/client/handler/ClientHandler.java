@@ -58,10 +58,10 @@ public class ClientHandler extends SimpleChannelInboundHandler<Response> {
 	@Override
 	public void channelRead0(ChannelHandlerContext ctx, Response response) throws Exception {
 		String requestId = response.getRequestId();
-		ClientFuture rpcFuture = pendingClient.get(requestId);
-		if (rpcFuture != null) {
+		ClientFuture clientFuture = pendingClient.get(requestId);
+		if (clientFuture != null) {
 			pendingClient.remove(requestId);
-			rpcFuture.done(response);
+			clientFuture.execute(response);
 		}
 	}
 

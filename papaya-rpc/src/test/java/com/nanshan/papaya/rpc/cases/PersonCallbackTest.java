@@ -15,46 +15,46 @@ import com.nanshan.papaya.rpc.registry.ServiceDiscovery;
  * Created by luxiaoxun on 2016/3/17.
  */
 public class PersonCallbackTest {
-    public static void main(String[] args) {
-        ServiceDiscovery serviceDiscovery = new ServiceDiscovery("127.0.0.1:2181");
-        final Client rpcClient = new Client(serviceDiscovery);
-        final CountDownLatch countDownLatch = new CountDownLatch(1);
+	public static void main(String[] args) {
+		ServiceDiscovery serviceDiscovery = new ServiceDiscovery("127.0.0.1:2181");
+		final Client rpcClient = new Client(serviceDiscovery);
+		final CountDownLatch countDownLatch = new CountDownLatch(1);
 
-        try {
-            @SuppressWarnings("static-access")
+		try {
+			@SuppressWarnings("static-access")
 			IAsyncObject client = rpcClient.createAsync(PersonService.class);
-            int num = 5;
-            ClientFuture helloPersonFuture = client.call("GetTestPerson", "xiaoming", num);
-            helloPersonFuture.addCallback(new ClientCallback() {
-                @Override
-                public void success(Object result) {
-                    @SuppressWarnings("unchecked")
+			int num = 5;
+			ClientFuture helloPersonFuture = client.call("GetTestPerson", "xiaoming", num);
+			helloPersonFuture.callback(new ClientCallback() {
+				@Override
+				public void success(Object result) {
+					@SuppressWarnings("unchecked")
 					List<Person> persons = (List<Person>) result;
-                    for (int i = 0; i < persons.size(); ++i) {
-                        System.out.println(persons.get(i));
-                    }
-                    countDownLatch.countDown();
-                }
+					for (int i = 0; i < persons.size(); ++i) {
+						System.out.println(persons.get(i));
+					}
+					countDownLatch.countDown();
+				}
 
-                @Override
-                public void fail(Exception e) {
-                    System.out.println(e);
-                    countDownLatch.countDown();
-                }
-            });
+				@Override
+				public void fail(Exception e) {
+					System.out.println(e);
+					countDownLatch.countDown();
+				}
+			});
 
-        } catch (Exception e) {
-            System.out.println(e);
-        }
+		} catch (Exception e) {
+			System.out.println(e);
+		}
 
-        try {
-            countDownLatch.await();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+		try {
+			countDownLatch.await();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 
-        rpcClient.stop();
+		rpcClient.stop();
 
-        System.out.println("End");
-    }
+		System.out.println("End");
+	}
 }

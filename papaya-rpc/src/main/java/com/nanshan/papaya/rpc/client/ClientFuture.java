@@ -28,15 +28,50 @@ public class ClientFuture implements Future<Object> {
 	private long startTime;
 	private long responseTimeThreshold = 5000;
 
-	private List<ClientCallback> pendingCallbacks = new ArrayList<ClientCallback>();
+	private List<ClientCallback> waitCallbacks = new ArrayList<ClientCallback>();
 	private ReentrantLock lock = new ReentrantLock();
 
+	// constructor
 	public ClientFuture(Request request) {
 		this.synchronizer = new ClientSynchronizer();
 		this.request = request;
 		this.startTime = System.currentTimeMillis();
 	}
 
+	/**
+	 * Client callback result processing
+	 * 
+	 * @param reponse
+	 *            {@code Server} result
+	 * @return
+	 */
+	public void execute(Response reponse) {
+		this.response = reponse;
+		synchronizer.release(1);
+		invoke();
+		// Threshold
+		long responseTime = System.currentTimeMillis() - startTime;
+		if (responseTime > this.responseTimeThreshold) {
+			LOG.warn("Service response time is too slow. Request id = " + reponse.getRequestId() + ". Response Time = "
+					+ responseTime + "ms");
+		}
+	}
+
+	public ClientFuture callback(ClientCallback callback) {
+		lock.lock();
+		try {
+			if (isDone()) {
+				run(callback);
+			} else {
+				this.waitCallbacks.add(callback);
+			}
+		} finally {
+			lock.unlock();
+		}
+		return this;
+	}
+
+	// Synchronizer synchronization processing
 	@Override
 	public boolean isDone() {
 		return synchronizer.isDone();
@@ -78,44 +113,20 @@ public class ClientFuture implements Future<Object> {
 		throw new UnsupportedOperationException();
 	}
 
-	public void done(Response reponse) {
-		this.response = reponse;
-		synchronizer.release(1);
-		invokeCallbacks();
-		// Threshold
-		long responseTime = System.currentTimeMillis() - startTime;
-		if (responseTime > this.responseTimeThreshold) {
-			LOG.warn("Service response time is too slow. Request id = " + reponse.getRequestId() + ". Response Time = "
-					+ responseTime + "ms");
-		}
-	}
-
-	private void invokeCallbacks() {
+	/* ========private utilities======== */
+	/* ========callback process======== */
+	private void invoke() {
 		lock.lock();
 		try {
-			for (final ClientCallback callback : pendingCallbacks) {
-				runCallback(callback);
+			for (final ClientCallback callback : waitCallbacks) {
+				run(callback);
 			}
 		} finally {
 			lock.unlock();
 		}
 	}
 
-	public ClientFuture addCallback(ClientCallback callback) {
-		lock.lock();
-		try {
-			if (isDone()) {
-				runCallback(callback);
-			} else {
-				this.pendingCallbacks.add(callback);
-			}
-		} finally {
-			lock.unlock();
-		}
-		return this;
-	}
-
-	private void runCallback(final ClientCallback callback) {
+	private void run(final ClientCallback callback) {
 		final Response res = this.response;
 		Client.submit(new Runnable() {
 			@Override

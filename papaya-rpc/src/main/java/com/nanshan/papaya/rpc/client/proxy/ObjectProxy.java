@@ -73,8 +73,8 @@ public class ObjectProxy<T> implements InvocationHandler, IAsyncObject {
 
 	/* ========private utilities======== */
 	private Request init(String className, String methodName, Object[] paramaters) {
-		LOG.debug(className + "[" + methodName + "]");
-		LOG.debug(methodName);
+		LOG.debug("Class Name=[" + className + "]");
+		LOG.debug("Method Name=[" + methodName + "]");
 		// Create the default initialization request.
 		Request request = new Request();
 		request.setRequestId(uuid());
