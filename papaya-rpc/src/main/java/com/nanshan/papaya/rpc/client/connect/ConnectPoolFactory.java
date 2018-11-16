@@ -80,6 +80,7 @@ public class ConnectPoolFactory {
 	 * @return
 	 */
 	public void updateConnectedServer(List<String> allServerAddress) {
+		LOG.debug("Update available services! service all size=" + allServerAddress.size() + "!");
 		if (allServerAddress != null) {
 			// Get available server node
 			if (allServerAddress.size() > 0) {

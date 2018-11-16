@@ -16,7 +16,8 @@ public class SimpleServer {
 		String serverAddress = "192.168.1.3:18866";
 		ServiceRegistry serviceRegistry = new ServiceRegistry("192.168.1.101:2181");
 		Server simpleServer = new Server(serverAddress, serviceRegistry);
-		// 服务注册
+
+		// Service register
 		HelloService helloService = new HelloServiceImpl();
 		PersonService personService = new PersonServiceImpl();
 		simpleServer.register("com.nanshan.papaya.rpc.client.HelloService", helloService);
