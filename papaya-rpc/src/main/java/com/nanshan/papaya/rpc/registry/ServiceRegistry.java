@@ -12,6 +12,8 @@ import org.apache.zookeeper.data.Stat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.papaya.common.Constants;
+
 /**
  * Zookeeper service registry
  * 
@@ -50,7 +52,7 @@ public class ServiceRegistry {
 	private ZooKeeper connect() {
 		ZooKeeper zk = null;
 		try {
-			zk = new ZooKeeper(registryAddress, Constant.ZK_SESSION_TIMEOUT, new Watcher() {
+			zk = new ZooKeeper(registryAddress, Constants.ZK_SESSION_TIMEOUT, new Watcher() {
 				@Override
 				public void process(WatchedEvent event) {
 					if (event.getState() == Event.KeeperState.SyncConnected) {
@@ -75,9 +77,9 @@ public class ServiceRegistry {
 	 */
 	private void createRootNode(ZooKeeper zk) {
 		try {
-			Stat s = zk.exists(Constant.ZK_REGISTRY_PATH, false);
+			Stat s = zk.exists(Constants.ZK_REGISTRY_PATH, false);
 			if (s == null) {
-				zk.create(Constant.ZK_REGISTRY_PATH, new byte[0], ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.PERSISTENT);
+				zk.create(Constants.ZK_REGISTRY_PATH, new byte[0], ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.PERSISTENT);
 			}
 		} catch (KeeperException e) {
 			LOG.error(e.toString());
@@ -96,7 +98,7 @@ public class ServiceRegistry {
 	private void createNode(ZooKeeper zk, String data) {
 		try {
 			byte[] bytes = data.getBytes();
-			String path = zk.create(Constant.ZK_DATA_PATH, bytes, ZooDefs.Ids.OPEN_ACL_UNSAFE,
+			String path = zk.create(Constants.ZK_DATA_PATH, bytes, ZooDefs.Ids.OPEN_ACL_UNSAFE,
 					CreateMode.EPHEMERAL_SEQUENTIAL);
 			LOG.debug("create zookeeper node ({} => {})", path, data);
 		} catch (KeeperException e) {

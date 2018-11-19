@@ -16,6 +16,12 @@
 
 	<!-- dependencies -->
 	<dependencies>
+		<!-- module -->
+		<dependency>
+			<groupId>com.nanshan</groupId>
+			<artifactId>papaya-common</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
 		<!-- Spring -->
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -30,6 +36,11 @@
 		<dependency>
 			<groupId>io.netty</groupId>
 			<artifactId>netty-all</artifactId>
+		</dependency>
+		<!-- Hessian -->
+		<dependency>
+			<groupId>com.caucho</groupId>
+			<artifactId>hessian</artifactId>
 		</dependency>
 		<!-- Protostuff -->
 		<dependency>

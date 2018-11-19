@@ -2,8 +2,8 @@
 /target
 /.classpath
 /.project
-/papaya-rpc/.classpath
-/papaya-rpc/.project
-/papaya-rpc/.settings
-/papaya-rpc/logs
-/papaya-rpc/target
+/*/.classpath
+/*/.project
+/*/.settings
+/*/logs
+/*/target

@@ -14,6 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.nanshan.papaya.rpc.client.connect.ConnectPoolFactory;
+import com.papaya.common.Constants;
 
 /**
  * Zookeeper service discovery
@@ -84,7 +85,7 @@ public class ServiceDiscovery {
 	private ZooKeeper connect() {
 		ZooKeeper zk = null;
 		try {
-			zk = new ZooKeeper(registryAddress, Constant.ZK_SESSION_TIMEOUT, new Watcher() {
+			zk = new ZooKeeper(registryAddress, Constants.ZK_SESSION_TIMEOUT, new Watcher() {
 				@Override
 				public void process(WatchedEvent event) {
 					if (event.getState() == Event.KeeperState.SyncConnected) {
@@ -108,7 +109,7 @@ public class ServiceDiscovery {
 	 */
 	private void watch(final ZooKeeper zooKeeper) {
 		try {
-			List<String> nodeList = zooKeeper.getChildren(Constant.ZK_REGISTRY_PATH, new Watcher() {
+			List<String> nodeList = zooKeeper.getChildren(Constants.ZK_REGISTRY_PATH, new Watcher() {
 				@Override
 				public void process(WatchedEvent event) {
 					if (event.getType() == Event.EventType.NodeChildrenChanged) {
@@ -118,7 +119,7 @@ public class ServiceDiscovery {
 			});
 			List<String> dataList = new ArrayList<String>();
 			for (String node : nodeList) {
-				byte[] bytes = zooKeeper.getData(Constant.ZK_REGISTRY_PATH + "/" + node, false, null);
+				byte[] bytes = zooKeeper.getData(Constants.ZK_REGISTRY_PATH + "/" + node, false, null);
 				dataList.add(new String(bytes));
 			}
 			LOG.debug("node data: {}", dataList);
