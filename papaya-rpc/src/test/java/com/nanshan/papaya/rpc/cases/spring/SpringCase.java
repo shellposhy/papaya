@@ -22,6 +22,6 @@ public class SpringCase {
 		HelloService helloService = rpcClient.create(HelloService.class);
 		String result = helloService.hello("Shih Shellpo");
 		System.out.println(result);
-		Assert.assertEquals("Hello! World", result);
+		Assert.assertEquals("Hello! Shih Shellpo", result);
 	}
 }

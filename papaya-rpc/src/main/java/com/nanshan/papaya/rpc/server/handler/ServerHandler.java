@@ -1,5 +1,7 @@
 package com.nanshan.papaya.rpc.server.handler;
 
+import io.netty.buffer.Unpooled;
+import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandlerContext;
@@ -109,7 +111,14 @@ public class ServerHandler extends SimpleChannelInboundHandler<Request> {
 	 */
 	@Override
 	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
-		LOG.error("server caught exception", cause);
+		 LOG.error("server caught exception", cause);
+		// If the client forces close a connection, the server throws:
+		// java.io.IOException: the remote host forces an existing
+		// connection to be closed.
+		Channel channel = ctx.channel();
+		if (channel.isActive()) {
+			channel.writeAndFlush(Unpooled.EMPTY_BUFFER).addListener(ChannelFutureListener.CLOSE);
+		}
 		ctx.close();
 	}
 }
