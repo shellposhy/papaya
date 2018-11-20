@@ -60,6 +60,7 @@
 		<module>papaya-rpc</module>
 		<module>papaya-common</module>
 		<module>papaya-protocol</module>
+		<module>papaya-monitor</module>
 	</modules>
 
 	<!-- dependencies -->
