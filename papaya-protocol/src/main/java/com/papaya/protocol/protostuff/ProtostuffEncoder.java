@@ -1,10 +1,10 @@
-package com.nanshan.papaya.rpc.protocol.protostuff;
+package com.papaya.protocol.protostuff;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToByteEncoder;
 
-import static com.nanshan.papaya.rpc.protocol.protostuff.Serializations.serialize;
+import static com.papaya.protocol.protostuff.Serializations.serialize;
 
 /**
  * Encoders based on {@code Protostuff}

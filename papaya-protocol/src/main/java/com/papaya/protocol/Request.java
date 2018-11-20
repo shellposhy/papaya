@@ -1,4 +1,4 @@
-package com.nanshan.papaya.rpc.protocol;
+package com.papaya.protocol;
 
 /**
  * Base Request

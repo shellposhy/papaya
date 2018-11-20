@@ -59,6 +59,7 @@
 	<modules>
 		<module>papaya-rpc</module>
 		<module>papaya-common</module>
+		<module>papaya-protocol</module>
 	</modules>
 
 	<!-- dependencies -->

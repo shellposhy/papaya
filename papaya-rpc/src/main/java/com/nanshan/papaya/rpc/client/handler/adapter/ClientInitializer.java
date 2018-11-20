@@ -1,10 +1,10 @@
 package com.nanshan.papaya.rpc.client.handler.adapter;
 
 import com.nanshan.papaya.rpc.client.handler.ClientHandler;
-import com.nanshan.papaya.rpc.protocol.Request;
-import com.nanshan.papaya.rpc.protocol.Response;
-import com.nanshan.papaya.rpc.protocol.protostuff.ProtostuffDecoder;
-import com.nanshan.papaya.rpc.protocol.protostuff.ProtostuffEncoder;
+import com.papaya.protocol.Request;
+import com.papaya.protocol.Response;
+import com.papaya.protocol.protostuff.ProtostuffDecoder;
+import com.papaya.protocol.protostuff.ProtostuffEncoder;
 
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;

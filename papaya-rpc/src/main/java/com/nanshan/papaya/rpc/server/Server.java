@@ -21,10 +21,10 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 
-import com.nanshan.papaya.rpc.protocol.Request;
-import com.nanshan.papaya.rpc.protocol.Response;
-import com.nanshan.papaya.rpc.protocol.protostuff.ProtostuffDecoder;
-import com.nanshan.papaya.rpc.protocol.protostuff.ProtostuffEncoder;
+import com.papaya.protocol.Request;
+import com.papaya.protocol.Response;
+import com.papaya.protocol.protostuff.ProtostuffDecoder;
+import com.papaya.protocol.protostuff.ProtostuffEncoder;
 import com.nanshan.papaya.rpc.registry.ServiceRegistry;
 import com.nanshan.papaya.rpc.server.annotation.PapayaService;
 import com.nanshan.papaya.rpc.server.handler.ServerHandler;

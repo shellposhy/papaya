@@ -6,8 +6,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.nanshan.papaya.rpc.client.ClientFuture;
-import com.nanshan.papaya.rpc.protocol.Request;
-import com.nanshan.papaya.rpc.protocol.Response;
+import com.papaya.protocol.Request;
+import com.papaya.protocol.Response;
 
 import java.net.SocketAddress;
 import java.util.concurrent.ConcurrentHashMap;

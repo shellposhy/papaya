@@ -10,33 +10,11 @@
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 
-	<!-- module -->
-	<artifactId>papaya-rpc</artifactId>
-	<name>papaya-rpc</name>
+	<!-- module info -->
+	<artifactId>papaya-protocol</artifactId>
+	<name>papaya-protocol</name>
 
-	<!-- dependencies -->
 	<dependencies>
-		<!-- module -->
-		<dependency>
-			<groupId>com.nanshan</groupId>
-			<artifactId>papaya-common</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
-		<dependency>
-			<groupId>com.nanshan</groupId>
-			<artifactId>papaya-protocol</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
-		<!-- Spring -->
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-context</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-test</artifactId>
-			<scope>test</scope>
-		</dependency>
 		<!-- Netty -->
 		<dependency>
 			<groupId>io.netty</groupId>
@@ -56,25 +34,10 @@
 			<groupId>com.dyuproject.protostuff</groupId>
 			<artifactId>protostuff-runtime</artifactId>
 		</dependency>
-		<!-- ZooKeeper -->
-		<dependency>
-			<groupId>org.apache.zookeeper</groupId>
-			<artifactId>zookeeper</artifactId>
-		</dependency>
 		<!-- Objenesis -->
 		<dependency>
 			<groupId>org.objenesis</groupId>
 			<artifactId>objenesis</artifactId>
-		</dependency>
-		<!-- CGLib -->
-		<dependency>
-			<groupId>cglib</groupId>
-			<artifactId>cglib</artifactId>
-		</dependency>
-		<!-- Lemmon -->
-		<dependency>
-			<groupId>bangyiba.common</groupId>
-			<artifactId>lemmon</artifactId>
 		</dependency>
 	</dependencies>
 

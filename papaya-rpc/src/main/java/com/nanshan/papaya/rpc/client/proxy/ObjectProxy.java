@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 import com.nanshan.papaya.rpc.client.ClientFuture;
 import com.nanshan.papaya.rpc.client.connect.ConnectPoolFactory;
 import com.nanshan.papaya.rpc.client.handler.ClientHandler;
-import com.nanshan.papaya.rpc.protocol.Request;
+import com.papaya.protocol.Request;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;

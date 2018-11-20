@@ -1,4 +1,4 @@
-package com.nanshan.papaya.rpc.protocol.protostuff;
+package com.papaya.protocol.protostuff;
 
 import com.dyuproject.protostuff.LinkedBuffer;
 import com.dyuproject.protostuff.ProtostuffIOUtil;

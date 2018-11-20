@@ -1,4 +1,4 @@
-package com.nanshan.papaya.rpc.protocol.protostuff;
+package com.papaya.protocol.protostuff;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
