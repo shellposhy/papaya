@@ -5,12 +5,12 @@ import java.util.List;
 
 import com.nanshan.papaya.rpc.client.PersonService;
 import com.nanshan.papaya.rpc.client.model.Person;
-import com.nanshan.papaya.rpc.server.annotation.PapayaService;
+import com.papaya.common.extension.Rpc;
 
 /**
  * Created by luxiaoxun on 2016-03-10.
  */
-@PapayaService(PersonService.class)
+@Rpc(PersonService.class)
 public class PersonServiceImpl implements PersonService {
 
     @Override

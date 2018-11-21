@@ -1,4 +1,4 @@
-package com.nanshan.papaya.rpc.server.annotation;
+package com.papaya.common.extension;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -15,6 +15,6 @@ import org.springframework.stereotype.Component;
 @Target({ ElementType.TYPE })
 @Retention(RetentionPolicy.RUNTIME)
 @Component
-public @interface PapayaService {
+public @interface Rpc {
 	Class<?> value();
 }

@@ -30,19 +30,13 @@ public class URL implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private final String protocol;
-
 	private final String username;
-
 	private final String password;
-
 	// by default, host to registry
 	private final String host;
-
 	// by default, port to registry
 	private final int port;
-
 	private final String path;
-
 	private final Map<String, String> parameters;
 
 	protected URL() {

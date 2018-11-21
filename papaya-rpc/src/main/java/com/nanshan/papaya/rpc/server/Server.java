@@ -21,12 +21,12 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 
+import com.papaya.common.extension.Rpc;
 import com.papaya.protocol.Request;
 import com.papaya.protocol.Response;
 import com.papaya.protocol.protostuff.ProtostuffDecoder;
 import com.papaya.protocol.protostuff.ProtostuffEncoder;
 import com.nanshan.papaya.rpc.registry.ServiceRegistry;
-import com.nanshan.papaya.rpc.server.annotation.PapayaService;
 import com.nanshan.papaya.rpc.server.handler.ServerHandler;
 
 /**
@@ -125,10 +125,10 @@ public class Server implements ApplicationContextAware, InitializingBean {
 	 */
 	@Override
 	public void setApplicationContext(ApplicationContext ctx) throws BeansException {
-		Map<String, Object> serviceBeanMap = ctx.getBeansWithAnnotation(PapayaService.class);
+		Map<String, Object> serviceBeanMap = ctx.getBeansWithAnnotation(Rpc.class);
 		if (serviceBeanMap.size() > 0) {
 			for (Object serviceBean : serviceBeanMap.values()) {
-				String interfaceName = serviceBean.getClass().getAnnotation(PapayaService.class).value().getName();
+				String interfaceName = serviceBean.getClass().getAnnotation(Rpc.class).value().getName();
 				LOG.info("Loading service: {}", interfaceName);
 				handlers.put(interfaceName, serviceBean);
 			}

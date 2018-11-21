@@ -2,9 +2,9 @@ package com.nanshan.papaya.rpc.server.service;
 
 import com.nanshan.papaya.rpc.client.HelloService;
 import com.nanshan.papaya.rpc.client.model.Person;
-import com.nanshan.papaya.rpc.server.annotation.PapayaService;
+import com.papaya.common.extension.Rpc;
 
-@PapayaService(HelloService.class)
+@Rpc(HelloService.class)
 public class HelloServiceImpl implements HelloService {
 
 	public HelloServiceImpl() {
