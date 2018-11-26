@@ -80,7 +80,7 @@ public class ConnectPoolFactory {
 	 * @return
 	 */
 	public void updateConnectedServer(List<String> allServerAddress) {
-		LOG.debug("Update available services! service all size=" + allServerAddress.size() + "!");
+		LOG.info("Update available services! service all size=" + allServerAddress.size() + "!");
 		if (allServerAddress != null) {
 			// Get available server node
 			if (allServerAddress.size() > 0) {
@@ -156,7 +156,7 @@ public class ConnectPoolFactory {
 		int size = connectedHandlers.size();
 		while (isRuning && size <= 0) {
 			try {
-				boolean available = waitingForHandler();
+				boolean available = await();
 				if (available) {
 					size = connectedHandlers.size();
 				}
@@ -180,7 +180,7 @@ public class ConnectPoolFactory {
 			ClientHandler connectedServerHandler = connectedHandlers.get(i);
 			connectedServerHandler.close();
 		}
-		signalAvailableHandler();
+		signal();
 		threadPoolExecutor.shutdown();
 		eventLoopGroup.shutdownGracefully();
 	}
@@ -208,7 +208,7 @@ public class ConnectPoolFactory {
 					@Override
 					public void operationComplete(final ChannelFuture channelFuture) throws Exception {
 						if (channelFuture.isSuccess()) {
-							LOG.debug("Successfully connect to remote server. remote peer = " + remotePeer);
+							LOG.info("Successfully connect to remote server. remote peer = " + remotePeer);
 							ClientHandler handler = channelFuture.channel().pipeline().get(ClientHandler.class);
 							addHandler(handler);
 						}
@@ -227,7 +227,7 @@ public class ConnectPoolFactory {
 		connectedHandlers.add(handler);
 		InetSocketAddress remoteAddress = (InetSocketAddress) handler.getChannel().remoteAddress();
 		connectedServerNodes.put(remoteAddress, handler);
-		signalAvailableHandler();
+		signal();
 	}
 
 	/**
@@ -235,7 +235,7 @@ public class ConnectPoolFactory {
 	 * 
 	 * @return
 	 */
-	private void signalAvailableHandler() {
+	private void signal() {
 		lock.lock();
 		try {
 			connected.signalAll();
@@ -244,7 +244,13 @@ public class ConnectPoolFactory {
 		}
 	}
 
-	private boolean waitingForHandler() throws InterruptedException {
+	/**
+	 * Causes the current thread to wait until it is signalled or interrupted,
+	 * or the specified waiting time elapses.
+	 * 
+	 * @return
+	 */
+	private boolean await() throws InterruptedException {
 		lock.lock();
 		try {
 			return connected.await(this.connectTimeoutMillis, TimeUnit.MILLISECONDS);

@@ -44,7 +44,7 @@ public class Server implements ApplicationContextAware, InitializingBean {
 	// service registry
 	private ServiceRegistry serviceRegistry;
 
-	// Client handler
+	// Server handler process and Service registration container
 	private Map<String, Object> handlers = new HashMap<String, Object>();
 	private static ThreadPoolExecutor threadPoolExecutor;
 
@@ -71,8 +71,9 @@ public class Server implements ApplicationContextAware, InitializingBean {
 	 *            the target {@code Object} service
 	 */
 	public Server register(String interfaceName, Object serviceBean) {
+		LOG.info("Service registration container:{}", interfaceName);
 		if (!handlers.containsKey(interfaceName)) {
-			LOG.info("Loading service: {}", interfaceName);
+			// Service registration container
 			handlers.put(interfaceName, serviceBean);
 		}
 		return this;
@@ -105,10 +106,10 @@ public class Server implements ApplicationContextAware, InitializingBean {
 			String[] array = serverAddress.split(":");
 			String host = array[0];
 			int port = Integer.parseInt(array[1]);
-
 			ChannelFuture future = bootstrap.bind(host, port).sync();
 			LOG.info("Server started on port {}", port);
 
+			// Register the current service provider address to zookeeper
 			if (serviceRegistry != null) {
 				serviceRegistry.register(serverAddress);
 			}

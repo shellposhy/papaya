@@ -52,10 +52,10 @@ public class ServiceDiscovery {
 		if (size > 0) {
 			if (size == 1) {
 				data = dataList.get(0);
-				LOG.debug("using only data: {}", data);
+				LOG.info("using only data: {}", data);
 			} else {
 				data = dataList.get(ThreadLocalRandom.current().nextInt(size));
-				LOG.debug("using random data: {}", data);
+				LOG.info("using random data: {}", data);
 			}
 		}
 		return data;
@@ -122,10 +122,10 @@ public class ServiceDiscovery {
 				byte[] bytes = zooKeeper.getData(Constants.ZK_REGISTRY_PATH + "/" + node, false, null);
 				dataList.add(new String(bytes));
 			}
-			LOG.debug("node data: {}", dataList);
+			LOG.info("node data: {}", dataList);
 			this.dataList = dataList;
 
-			LOG.debug("Service discovery triggered updating connected server node.");
+			LOG.info("Service discovery triggered updating connected server node.");
 			ConnectPoolFactory.getInstance().updateConnectedServer(this.dataList);
 		} catch (KeeperException | InterruptedException e) {
 			LOG.error("", e);

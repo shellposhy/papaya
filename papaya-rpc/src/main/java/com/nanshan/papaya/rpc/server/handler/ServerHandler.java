@@ -46,7 +46,7 @@ public class ServerHandler extends SimpleChannelInboundHandler<Request> {
 		Server.submit(new Runnable() {
 			@Override
 			public void run() {
-				LOG.debug("Receive request " + request.getRequestId());
+				LOG.info("Receive request " + request.getRequestId());
 				// Response the client result
 				Response response = new Response();
 				// put request id into the response
@@ -62,7 +62,7 @@ public class ServerHandler extends SimpleChannelInboundHandler<Request> {
 				ctx.writeAndFlush(response).addListener(new ChannelFutureListener() {
 					@Override
 					public void operationComplete(ChannelFuture channelFuture) throws Exception {
-						LOG.debug("Send response for request " + request.getRequestId());
+						LOG.info("Send response for request " + request.getRequestId());
 					}
 				});
 			}
@@ -111,7 +111,7 @@ public class ServerHandler extends SimpleChannelInboundHandler<Request> {
 	 */
 	@Override
 	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
-		 LOG.error("server caught exception", cause);
+		LOG.error("server caught exception", cause);
 		// If the client forces close a connection, the server throws:
 		// java.io.IOException: the remote host forces an existing
 		// connection to be closed.

@@ -52,7 +52,7 @@ public class ClientFuture implements Future<Object> {
 		// Threshold
 		long responseTime = System.currentTimeMillis() - startTime;
 		if (responseTime > this.responseTimeThreshold) {
-			LOG.warn("Service response time is too slow. Request id = " + reponse.getRequestId() + ". Response Time = "
+			LOG.info("Service response time is too slow. Request id = " + reponse.getRequestId() + ". Response Time = "
 					+ responseTime + "ms");
 		}
 	}

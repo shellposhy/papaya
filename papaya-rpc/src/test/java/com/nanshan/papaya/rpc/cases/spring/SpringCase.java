@@ -1,5 +1,6 @@
 package com.nanshan.papaya.rpc.cases.spring;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -23,5 +24,12 @@ public class SpringCase {
 		String result = helloService.hello("Shih Shellpo");
 		System.out.println(result);
 		Assert.assertEquals("Hello! Shih Shellpo", result);
+	}
+
+	@After
+	public void setTear() {
+		if (rpcClient != null) {
+			rpcClient.stop();
+		}
 	}
 }
