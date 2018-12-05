@@ -76,6 +76,7 @@ public class ServerHandler extends SimpleChannelInboundHandler<Request> {
 	 * @return Java {@code Object}
 	 */
 	private Object handle(Request request) throws Throwable {
+		LOG.info("Service Data Process!");
 		String className = request.getClassName();
 		Object serviceBean = handlers.get(className);
 

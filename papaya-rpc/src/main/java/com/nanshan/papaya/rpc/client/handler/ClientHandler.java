@@ -58,6 +58,7 @@ public class ClientHandler extends SimpleChannelInboundHandler<Response> {
 	@Override
 	public void channelRead0(ChannelHandlerContext ctx, Response response) throws Exception {
 		String requestId = response.getRequestId();
+		LOG.info("Client ID:" + requestId + ",response!");
 		ClientFuture clientFuture = pendingClient.get(requestId);
 		if (clientFuture != null) {
 			pendingClient.remove(requestId);
@@ -85,6 +86,7 @@ public class ClientHandler extends SimpleChannelInboundHandler<Response> {
 	 *            {@code Request}
 	 */
 	public ClientFuture send(Request request) {
+		LOG.info("Client Request Process:[" + request.getRequestId() + "]");
 		final CountDownLatch latch = new CountDownLatch(1);
 		ClientFuture rpcFuture = new ClientFuture(request);
 		pendingClient.put(request.getRequestId(), rpcFuture);
