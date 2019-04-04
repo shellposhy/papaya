@@ -22,7 +22,10 @@ public class SpringCase {
 		@SuppressWarnings("static-access")
 		HelloService helloService = rpcClient.create(HelloService.class);
 		String result = helloService.hello("Shih Shellpo");
+		
+		String result1 = helloService.hello("Shih222 Shellpo");
 		System.out.println(result);
+		System.out.println(result1);
 		Assert.assertEquals("Hello! Shih Shellpo", result);
 	}
 
