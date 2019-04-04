@@ -21,7 +21,7 @@ public class CallbackAsyncCase {
 		final CountDownLatch countDownLatch = new CountDownLatch(1);
 
 		// Service discovery
-		ServiceDiscovery discovery = new ServiceDiscovery("192.168.1.101:2181");
+		ServiceDiscovery discovery = new ServiceDiscovery("192.168.1.101:2181", "/registry");
 		// client
 		final Client client = new Client(discovery);
 

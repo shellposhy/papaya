@@ -18,7 +18,7 @@ public class SimpleCase {
 	// test case
 	public static void main(String[] args) {
 		// Service discovery
-		ServiceDiscovery discovery = new ServiceDiscovery("192.168.2.28:2181");
+		ServiceDiscovery discovery = new ServiceDiscovery("192.168.2.28:2181","/registry");
 
 		// client invoke
 		final Client client = new Client(discovery);

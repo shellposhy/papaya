@@ -13,6 +13,7 @@
 
     <bean id="serviceRegistry" class="com.nanshan.papaya.rpc.registry.ServiceRegistry">
         <constructor-arg name="registryAddress" value="${registry.address}"/>
+        <constructor-arg name="registryPath" value="${registry.path}"/>
     </bean>
 
     <bean id="rpcServer" class="com.nanshan.papaya.rpc.server.Server">

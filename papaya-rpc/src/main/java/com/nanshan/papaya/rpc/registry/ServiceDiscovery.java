@@ -30,11 +30,13 @@ public class ServiceDiscovery {
 
 	// zookeeper address
 	private String registryAddress;
+	private String registryPath;
 	private ZooKeeper zookeeper;
 
 	// constructor
-	public ServiceDiscovery(String registryAddress) {
+	public ServiceDiscovery(String registryAddress, String registryPath) {
 		this.registryAddress = registryAddress;
+		this.registryPath = registryPath;
 		zookeeper = connect();
 		if (zookeeper != null) {
 			watch(zookeeper);
@@ -109,7 +111,7 @@ public class ServiceDiscovery {
 	 */
 	private void watch(final ZooKeeper zooKeeper) {
 		try {
-			List<String> nodeList = zooKeeper.getChildren(Constants.ZK_REGISTRY_PATH, new Watcher() {
+			List<String> nodeList = zooKeeper.getChildren(this.registryPath, new Watcher() {
 				@Override
 				public void process(WatchedEvent event) {
 					if (event.getType() == Event.EventType.NodeChildrenChanged) {
@@ -119,7 +121,7 @@ public class ServiceDiscovery {
 			});
 			List<String> dataList = new ArrayList<String>();
 			for (String node : nodeList) {
-				byte[] bytes = zooKeeper.getData(Constants.ZK_REGISTRY_PATH + "/" + node, false, null);
+				byte[] bytes = zooKeeper.getData(this.registryPath + "/" + node, false, null);
 				dataList.add(new String(bytes));
 			}
 			LOG.info("node data: {}", dataList);

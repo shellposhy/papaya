@@ -14,7 +14,7 @@ public class SimpleServer {
 
 	public static void main(String[] args) {
 		String serverAddress = "192.168.2.20:18866";
-		ServiceRegistry serviceRegistry = new ServiceRegistry("192.168.2.28:2181");
+		ServiceRegistry serviceRegistry = new ServiceRegistry("192.168.2.28:2181", "/registry");
 		Server simpleServer = new Server(serverAddress, serviceRegistry);
 
 		// Service register

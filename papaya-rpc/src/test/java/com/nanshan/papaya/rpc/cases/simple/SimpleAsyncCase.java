@@ -21,7 +21,7 @@ public class SimpleAsyncCase {
 	// test case
 	public static void main(String[] args) {
 		// Service discovery
-		ServiceDiscovery discovery = new ServiceDiscovery("192.168.1.101:2181");
+		ServiceDiscovery discovery = new ServiceDiscovery("192.168.1.101:2181","/registry");
 
 		// client invoke
 		final Client client = new Client(discovery);

@@ -11,6 +11,7 @@
 
     <bean id="serviceDiscovery" class="com.nanshan.papaya.rpc.registry.ServiceDiscovery">
         <constructor-arg name="registryAddress" value="${registry.address}"/>
+        <constructor-arg name="registryPath" value="${registry.path}"/>
     </bean>
 
     <bean id="rpcClient" class="com.nanshan.papaya.rpc.client.Client">
