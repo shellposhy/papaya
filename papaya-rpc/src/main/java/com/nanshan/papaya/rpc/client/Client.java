@@ -16,6 +16,7 @@ import com.nanshan.papaya.rpc.registry.ServiceDiscovery;
  * @author shellpo shih
  * @version 1.0
  */
+@SuppressWarnings("unchecked")
 public class Client {
 
 	// Client thread pool
@@ -34,14 +35,22 @@ public class Client {
 		this.serviceDiscovery = serviceDiscovery;
 	}
 
-	@SuppressWarnings("unchecked")
 	public static <T> T create(Class<T> interfaceClass) {
 		return (T) Proxy.newProxyInstance(interfaceClass.getClassLoader(), new Class<?>[] { interfaceClass },
 				new ObjectProxy<T>(interfaceClass));
 	}
 
+	public static <T> T create(Class<T> interfaceClass, String serverAddress) {
+		return (T) Proxy.newProxyInstance(interfaceClass.getClassLoader(), new Class<?>[] { interfaceClass },
+				new ObjectProxy<T>(interfaceClass, serverAddress));
+	}
+
 	public static <T> IAsyncObject createAsync(Class<T> interfaceClass) {
 		return new ObjectProxy<T>(interfaceClass);
+	}
+
+	public static <T> IAsyncObject createAsync(Class<T> interfaceClass, String serverAddress) {
+		return new ObjectProxy<T>(interfaceClass, serverAddress);
 	}
 
 	public static void submit(Runnable task) {
