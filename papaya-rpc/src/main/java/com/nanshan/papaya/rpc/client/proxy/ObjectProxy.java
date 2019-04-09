@@ -13,6 +13,7 @@ import java.lang.reflect.Method;
 
 import static cn.com.lemon.annotation.Reflections.type;
 import static cn.com.lemon.base.Strings.uuid;
+import static cn.com.lemon.base.Strings.isNullOrEmpty;
 
 /**
  * Dynamic object proxy, and create request request, and send.
@@ -24,9 +25,15 @@ public class ObjectProxy<T> implements InvocationHandler, IAsyncObject {
 	private static final Logger LOG = LoggerFactory.getLogger(ObjectProxy.class);
 	// Proxy class
 	private Class<T> clazz;
+	private String serverAddress;
 
 	public ObjectProxy(Class<T> clazz) {
 		this.clazz = clazz;
+	}
+
+	public ObjectProxy(Class<T> clazz, String serverAddress) {
+		this.clazz = clazz;
+		this.serverAddress = serverAddress;
 	}
 
 	@Override
@@ -58,14 +65,30 @@ public class ObjectProxy<T> implements InvocationHandler, IAsyncObject {
 		request.setParameterTypes(method.getParameterTypes());
 		request.setParameters(paramaters);
 		// Client call
-		ClientHandler handler = ConnectPoolFactory.getInstance().handler();
+		ClientHandler handler = null;
+		/** support Multiservice different node */
+		if (isNullOrEmpty(this.serverAddress)) {
+			// single server node
+			handler = ConnectPoolFactory.getInstance().handler();
+		} else {
+			handler = ConnectPoolFactory.getInstance().handler(this.serverAddress);
+		}
+		LOG.info("handler registry address=" + handler.getRemotePeer().toString());
 		ClientFuture rpcFuture = handler.send(request);
 		return rpcFuture.get();
 	}
 
 	@Override
 	public ClientFuture call(String funcName, Object... paramaters) {
-		ClientHandler handler = ConnectPoolFactory.getInstance().handler();
+		ClientHandler handler = null;
+		/** support Multiservice different node */
+		if (isNullOrEmpty(this.serverAddress)) {
+			// single server node
+			handler = ConnectPoolFactory.getInstance().handler();
+		} else {
+			handler = ConnectPoolFactory.getInstance().handler(this.serverAddress);
+		}
+		LOG.info("handler registry address=" + handler.getRemotePeer().toString());
 		Request request = init(this.clazz.getName(), funcName, paramaters);
 		ClientFuture rpcFuture = handler.send(request);
 		return rpcFuture;

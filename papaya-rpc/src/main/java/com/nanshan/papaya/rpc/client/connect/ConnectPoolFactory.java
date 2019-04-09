@@ -166,7 +166,49 @@ public class ConnectPoolFactory {
 			}
 		}
 		int index = (roundRobin.getAndAdd(1) + size) % size;
+		ClientHandler clientHandler = connectedHandlers.get(index);
+		LOG.info("find handler index=" + index);
+		LOG.info("find handler registry address=" + clientHandler.getRemotePeer().toString());
 		return connectedHandlers.get(index);
+	}
+
+	/**
+	 * Client {@code Request} {@code ClientHandler}
+	 * <p>
+	 * support Multiservice different node
+	 * 
+	 * @param serverAddress
+	 *            the server address
+	 * @return
+	 */
+	public ClientHandler handler(String serverAddress) {
+		int size = connectedHandlers.size();
+		while (isRuning && size <= 0) {
+			try {
+				boolean available = await();
+				if (available) {
+					size = connectedHandlers.size();
+				}
+			} catch (InterruptedException e) {
+				LOG.error("Waiting for available node is interrupted! ", e);
+				throw new RuntimeException("Can't connect any servers!", e);
+			}
+		}
+		// Create server node container with the same service address
+		// Server node:from the service registration address
+		CopyOnWriteArrayList<ClientHandler> connectedServerHandlers = new CopyOnWriteArrayList<>();
+		for (ClientHandler clientHandler : connectedHandlers) {
+			String clientServerAddress = clientHandler.getRemotePeer().toString();
+			if (clientServerAddress.contains(serverAddress)) {
+				connectedServerHandlers.add(clientHandler);
+			}
+		}
+		int newSize = connectedServerHandlers.size();
+		int index = (roundRobin.getAndAdd(1) + newSize) % newSize;
+		ClientHandler clientHandler = connectedServerHandlers.get(index);
+		LOG.info("find handler index=" + index);
+		LOG.info("find handler registry address=" + clientHandler.getRemotePeer().toString());
+		return connectedServerHandlers.get(index);
 	}
 
 	/**
