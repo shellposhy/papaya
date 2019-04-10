@@ -73,7 +73,6 @@ public class ObjectProxy<T> implements InvocationHandler, IAsyncObject {
 		} else {
 			handler = ConnectPoolFactory.getInstance().handler(this.serverAddress);
 		}
-		LOG.info("handler registry address=" + handler.getRemotePeer().toString());
 		ClientFuture rpcFuture = handler.send(request);
 		return rpcFuture.get();
 	}
@@ -88,7 +87,6 @@ public class ObjectProxy<T> implements InvocationHandler, IAsyncObject {
 		} else {
 			handler = ConnectPoolFactory.getInstance().handler(this.serverAddress);
 		}
-		LOG.info("handler registry address=" + handler.getRemotePeer().toString());
 		Request request = init(this.clazz.getName(), funcName, paramaters);
 		ClientFuture rpcFuture = handler.send(request);
 		return rpcFuture;

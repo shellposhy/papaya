@@ -13,7 +13,7 @@ public class SimpleServer {
 	private static final Logger logger = LoggerFactory.getLogger(SimpleServer.class);
 
 	public static void main(String[] args) {
-		String serverAddress = "192.168.2.20:18866";
+		String serverAddress = "192.168.2.20:18868";
 		ServiceRegistry serviceRegistry = new ServiceRegistry("192.168.2.28:2181", "/registry");
 		Server simpleServer = new Server(serverAddress, serviceRegistry);
 

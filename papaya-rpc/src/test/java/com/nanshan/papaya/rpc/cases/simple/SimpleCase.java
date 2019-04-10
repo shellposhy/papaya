@@ -1,10 +1,7 @@
 package com.nanshan.papaya.rpc.cases.simple;
 
-import java.util.List;
-
 import com.nanshan.papaya.rpc.client.Client;
 import com.nanshan.papaya.rpc.client.HelloService;
-import com.nanshan.papaya.rpc.client.PersonService;
 import com.nanshan.papaya.rpc.client.model.Person;
 import com.nanshan.papaya.rpc.registry.ServiceDiscovery;
 
@@ -32,16 +29,16 @@ public class SimpleCase {
 			@Override
 			public void run() {
 				@SuppressWarnings("static-access")
-				final HelloService service = client.create(HelloService.class);
+				final HelloService service = client.create(HelloService.class,"192.168.2.20:18868");
 				String result = service.hello("First Say!");
 				System.out.println(result);
 				String personResult = service.hello(person);
 				System.out.println(personResult);
-
+				
 				@SuppressWarnings("static-access")
-				final PersonService personService = client.create(PersonService.class);
-				List<Person> persons = personService.GetTestPerson("Shih Shellpo", 2);
-				System.out.println("Person size=" + persons.size());
+				final HelloService service1 = client.create(HelloService.class,"192.168.2.20:18868");
+				System.out.println( service1.hello("First Say!"));
+
 			}
 		});
 		thread.start();

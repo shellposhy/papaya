@@ -167,9 +167,8 @@ public class ConnectPoolFactory {
 		}
 		int index = (roundRobin.getAndAdd(1) + size) % size;
 		ClientHandler clientHandler = connectedHandlers.get(index);
-		LOG.info("find handler index=" + index);
-		LOG.info("find handler registry address=" + clientHandler.getRemotePeer().toString());
-		return connectedHandlers.get(index);
+		LOG.info("Server Socket Address=" + clientHandler.getRemotePeer());
+		return clientHandler;
 	}
 
 	/**
@@ -197,18 +196,20 @@ public class ConnectPoolFactory {
 		// Create server node container with the same service address
 		// Server node:from the service registration address
 		CopyOnWriteArrayList<ClientHandler> connectedServerHandlers = new CopyOnWriteArrayList<>();
+		LOG.info("Client Socket Address=" + serverAddress);
 		for (ClientHandler clientHandler : connectedHandlers) {
-			String clientServerAddress = clientHandler.getRemotePeer().toString();
-			if (clientServerAddress.contains(serverAddress)) {
-				connectedServerHandlers.add(clientHandler);
+			SocketAddress socketAddress = clientHandler.getRemotePeer();
+			LOG.info("Server Socket Address=" + socketAddress);
+			if (null != socketAddress) {
+				if (socketAddress.toString().contains(serverAddress)) {
+					connectedServerHandlers.add(clientHandler);
+				}
 			}
 		}
 		int newSize = connectedServerHandlers.size();
 		int index = (roundRobin.getAndAdd(1) + newSize) % newSize;
 		ClientHandler clientHandler = connectedServerHandlers.get(index);
-		LOG.info("find handler index=" + index);
-		LOG.info("find handler registry address=" + clientHandler.getRemotePeer().toString());
-		return connectedServerHandlers.get(index);
+		return clientHandler;
 	}
 
 	/**
