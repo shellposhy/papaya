@@ -23,8 +23,19 @@ import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
 
 /**
+ * Client {@code ClientHandler} connection pool management.
+ * <p>
+ * If the service registry changes or reconnects to the service center, it needs
+ * to be updated {@link ConnectPoolFactory#updateConnectedServer(List)} and
+ * notified to all connected clients.
+ * <p>
+ * When a new service is registered or updated, it is best to invoke or restart
+ * the service discovery center to facilitate discovery and use of the new or
+ * updated service.
  * 
- * */
+ * @author shaobo shih
+ * @version 1.0
+ */
 public class ConnectPoolFactory {
 	private static final Logger LOG = LoggerFactory.getLogger(ConnectPoolFactory.class);
 	private volatile static ConnectPoolFactory connectManage;
@@ -207,9 +218,12 @@ public class ConnectPoolFactory {
 			}
 		}
 		int newSize = connectedServerHandlers.size();
-		int index = (roundRobin.getAndAdd(1) + newSize) % newSize;
-		ClientHandler clientHandler = connectedServerHandlers.get(index);
-		return clientHandler;
+		if (newSize > 0) {
+			int index = (roundRobin.getAndAdd(1) + newSize) % newSize;
+			ClientHandler clientHandler = connectedServerHandlers.get(index);
+			return clientHandler;
+		}
+		return handler();
 	}
 
 	/**
