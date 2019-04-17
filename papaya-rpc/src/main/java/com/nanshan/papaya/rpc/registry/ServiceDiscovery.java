@@ -134,4 +134,10 @@ public class ServiceDiscovery {
 		}
 	}
 
+	/**
+	 * Service registry node list
+	 */
+	public List<String> getDataList() {
+		return dataList;
+	}
 }
