@@ -21,10 +21,12 @@ import com.nanshan.papaya.rpc.remote.support.AbstractZookeeperClient;
  */
 public class Zkclient extends AbstractZookeeperClient<IZkChildListener> {
 	private final ZkclientWrapper client;
+	private final long timeout;
 	private volatile KeeperState state = KeeperState.SyncConnected;
 
-	public Zkclient(String serverAddr) {
-		client = new ZkclientWrapper(serverAddr, 30000L);
+	public Zkclient(String serverAddr, long timeout) {
+		this.timeout = timeout;
+		client = new ZkclientWrapper(serverAddr, this.timeout);
 		client.addListener(new IZkStateListener() {
 
 			@Override
