@@ -32,6 +32,7 @@ public class ZkclientWrapper {
 		this.timeout = timeout;
 		completableFuture = SettableFuture.create();
 		completableFuture.set(new ZkClient(serverAddr, Integer.MAX_VALUE));
+		start();
 	}
 
 	public void start() {

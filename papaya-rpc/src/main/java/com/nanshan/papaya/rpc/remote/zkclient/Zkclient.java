@@ -49,7 +49,6 @@ public class Zkclient extends AbstractZookeeperClient<IZkChildListener> {
 				stateChanged(StateListener.RECONNECTED);
 			}
 		});
-		client.start();
 	}
 
 	@Override
