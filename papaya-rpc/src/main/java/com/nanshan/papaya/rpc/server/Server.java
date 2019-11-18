@@ -21,6 +21,7 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 
+import com.papaya.common.Constants;
 import com.papaya.common.extension.Rpc;
 import com.papaya.protocol.Request;
 import com.papaya.protocol.Response;
@@ -95,7 +96,7 @@ public class Server implements ApplicationContextAware, InitializingBean {
 					.childHandler(new ChannelInitializer<SocketChannel>() {
 						@Override
 						public void initChannel(SocketChannel channel) throws Exception {
-							channel.pipeline().addLast(new LengthFieldBasedFrameDecoder(65536, 0, 4, 0, 0))
+							channel.pipeline().addLast(new LengthFieldBasedFrameDecoder(Constants.MaxFrameLength, 0, 4, 0, 0))
 									.addLast(new ProtostuffDecoder(Request.class))
 									.addLast(new ProtostuffEncoder(Response.class))
 									.addLast(new ServerHandler(handlers));

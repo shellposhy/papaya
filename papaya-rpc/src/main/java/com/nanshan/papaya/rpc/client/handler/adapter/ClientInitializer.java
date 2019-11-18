@@ -1,6 +1,7 @@
 package com.nanshan.papaya.rpc.client.handler.adapter;
 
 import com.nanshan.papaya.rpc.client.handler.ClientHandler;
+import com.papaya.common.Constants;
 import com.papaya.protocol.Request;
 import com.papaya.protocol.Response;
 import com.papaya.protocol.protostuff.ProtostuffDecoder;
@@ -24,7 +25,7 @@ public class ClientInitializer extends ChannelInitializer<SocketChannel> {
 	protected void initChannel(SocketChannel socketChannel) throws Exception {
 		ChannelPipeline cp = socketChannel.pipeline();
 		cp.addLast(new ProtostuffEncoder(Request.class));
-		cp.addLast(new LengthFieldBasedFrameDecoder(65536, 0, 4, 0, 0));
+		cp.addLast(new LengthFieldBasedFrameDecoder(Constants.MaxFrameLength, 0, 4, 0, 0));
 		cp.addLast(new ProtostuffDecoder(Response.class));
 		cp.addLast(new ClientHandler());
 	}
