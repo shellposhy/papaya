@@ -27,7 +27,7 @@
 
 	<!-- properties -->
 	<properties>
-		<spring_version>4.3.10.RELEASE</spring_version>
+		<spring_version>4.3.29.RELEASE</spring_version>
 		<netty_version>4.1.16.Final</netty_version>
 		<fastjson_version>1.2.39</fastjson_version>
 		<hessian_version>4.0.51</hessian_version>
